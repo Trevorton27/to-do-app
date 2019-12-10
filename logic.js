@@ -17,7 +17,7 @@ form.addEventListener('submit', event => {
 });
 
 const list = document.querySelector('.js-todo-list');
-
+let todoItem;
 function addTodo(text) {
     const todo = {
       text,
@@ -27,8 +27,10 @@ function addTodo(text) {
     };
   
     todoItems.push(todo);
-      console.log(todo);
-    localStorage.setItem('key', todo.text);
+      console.log(todo);  
+    const theList = JSON.stringify(todoItems);
+    localStorage.setItem('todoItem', theList);
+ 
    
     list.insertAdjacentHTML('beforeend', `
       <li class="todo-item" data-key="${todo.id}">
@@ -52,6 +54,7 @@ list.addEventListener('click', event => {
   if (event.target.classList.contains('js-delete-todo')) {
     const itemKey = event.target.parentElement.dataset.key;
     deleteTodo(itemKey);
+    localStorage.removeItem(itemKey);
   }
 });
 
@@ -72,4 +75,5 @@ function toggleDone(key) {
     const item = document.querySelector(`[data-key='${key}']`);
     alert('You sure about that, now?')
     item.remove();
+    
   };

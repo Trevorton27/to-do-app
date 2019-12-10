@@ -1,15 +1,6 @@
 let todoItems = [];
 
-function addTodo(text) {
-  const todo = {
-    text,
-    checked: false,
-    id: Date.now(),
-  };
 
-  todoItems.push(todo);
-  console.log(todo);
-}
 
 const form = document.querySelector('.js-form');
 form.addEventListener('submit', event => {
@@ -32,10 +23,12 @@ function addTodo(text) {
       text,
       checked: false,
       id: Date.now(),
+
     };
   
     todoItems.push(todo);
-    localStorage.setItem('key', 'todo.text');
+      console.log(todo);
+    localStorage.setItem('key', todo.text);
    
     list.insertAdjacentHTML('beforeend', `
       <li class="todo-item" data-key="${todo.id}">
@@ -46,8 +39,8 @@ function addTodo(text) {
           <svg><use href="#delete-icon"></use></svg>
         </button>
       </li>
-    `);
-  }
+    `)};
+  
 
   
 list.addEventListener('click', event => {
@@ -77,5 +70,6 @@ function toggleDone(key) {
   function deleteTodo(key) {
     todoItems = todoItems.filter(item => item.id !== Number(key));
     const item = document.querySelector(`[data-key='${key}']`);
+    alert('You sure about that, now?')
     item.remove();
-  }
+  };

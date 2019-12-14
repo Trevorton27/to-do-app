@@ -2,6 +2,7 @@ let todoItems = [];
 
 
 
+
 const form = document.querySelector('.js-form');
 form.addEventListener('submit', event => {
   event.preventDefault();
@@ -13,7 +14,7 @@ form.addEventListener('submit', event => {
     input.value = '';
     input.focus();
   }
-  console.log(text);
+  
 });
 
 const list = document.querySelector('.js-todo-list');
@@ -28,7 +29,7 @@ function addTodo(text) {
   
     todoItems.push(todo);
       console.log(todo);  
-    const theList = JSON.stringify(todoItems);
+      const theList = JSON.stringify(todoItems);
     localStorage.setItem('todoItem', theList);
  
    
@@ -54,7 +55,6 @@ list.addEventListener('click', event => {
   if (event.target.classList.contains('js-delete-todo')) {
     const itemKey = event.target.parentElement.dataset.key;
     deleteTodo(itemKey);
-    localStorage.removeItem(itemKey);
   }
 });
 
@@ -68,12 +68,16 @@ function toggleDone(key) {
     } else {
       item.classList.remove('done');
     }
+
+    
   };
   
   function deleteTodo(key) {
     todoItems = todoItems.filter(item => item.id !== Number(key));
     const item = document.querySelector(`[data-key='${key}']`);
-    alert('You sure about that, now?')
+    //alert('You sure about that, now?')
     item.remove();
+    localStorage.removeItem('todoItem');
+    console.log("This array is the todoItems array: ", todoItems);
     
   };

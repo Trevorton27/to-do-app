@@ -77,7 +77,22 @@ function toggleDone(key) {
     const item = document.querySelector(`[data-key='${key}']`);
     //alert('You sure about that, now?')
     item.remove();
-    localStorage.removeItem('todoItem');
-    console.log("This array is the todoItems array: ", todoItems);
+    const retrieve = localStorage.getItem('todoItem');
+    const stringToArray = retrieve.split();
+    const findIt = stringToArray.indexOf(item);
+
+    item.delete(findIt);
     
-  };
+    let backToString = JSON.stringify(stringToArray);
+
+    console.log('backToString: ', backToString);
+
+      };
+
+    
+    
+
+
+    //console.log("This array is the todoItems array: ", todoItems);
+    
+  

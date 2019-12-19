@@ -1,7 +1,4 @@
-let todoItems = [];
-
-
-
+let todoItems = JSON.parse(localStorage.getItem('todoItem')) || [];
 
 const form = document.querySelector('.js-form');
 form.addEventListener('submit', event => {
@@ -29,12 +26,12 @@ function addTodo(text) {
 
     todoItems.push(todo);
       console.log(todo);  
-      const theList = JSON.stringify(todoItems);
-    localStorage.setItem('todoItem', theList);
-    console.log('This is the list: ', theList);
+      
+    localStorage.setItem('todoItem', JSON.stringify(todoItems));
+    console.log('This is the list: ', JSON.stringify(todoItems));
    
     list.insertAdjacentHTML('beforeend', `
-      <li class="todo-item" data-key="${todo.id}">
+      <li class="todo-item" id="todoLi" data-key="${todo.id}">
         <input id="${todo.id}" type="checkbox"/>
         <label for="${todo.id}" class="tick js-tick"></label>
         <span>${todo.text}</span>
@@ -44,27 +41,20 @@ function addTodo(text) {
       </li>
     `)};
   
-document.onload = function() {
+ /*function checkLocalStorage() {
   if(localStorage.getItem('todoItem') !== null) {
-    theList = JSON.parse(localStorage.getItem('todoItem'));
+    JSON.parse(localStorage.getItem('todoItem'));
   } 
 
-  console.log(theList);
-  theList.push('todoItem');
+  
+  todoItems.push('todoItem');
+ 
+  addTodo();
+  console.log('am i working');
 
-  theList = list;
+};*/
 
-  list.insertAdjacentHTML('beforeend', `
-      <li class="todo-item" data-key="${todo.id}">
-        <input id="${todoItem.id}" type="checkbox"/>
-        <label for="${todoItem.id}" class="tick js-tick"></label>
-        <span>${todoItem.text}</span>
-        <button class="delete-todo js-delete-todo">
-          <svg><use href="#delete-icon"></use></svg>
-        </button>
-      </li>
-    `);
-};
+//document.querySelector('.js-todo-list').addEventListener("load", checkLocalStorage);
 
 list.addEventListener('click', event => {
   if (event.target.classList.contains('js-tick')) {
@@ -95,14 +85,17 @@ function toggleDone(key) {
     const item = document.querySelector(`[data-key='${key}']`);
     //alert('You sure about that, now?');
     item.remove();
-    const retrieve = localStorage.getItem('todoItem');
-    const stringToArray = retrieve.split();
-    const findIt = stringToArray.indexOf(item);
-
-    item.delete(findIt);
-    localStorage.removeItem(findIt);
     
+    const retrieve = localStorage.getItem('todoItem');
+    const stringToArray = retrieve.split('todoItem');
+    //const findIt = stringToArray.indexOf(item);
+
+   // findIt = 'todoItem';
+
+    localStorage.removeItem('todoItem');
+
     let backToString = JSON.stringify(stringToArray);
+    localStorage.removeItem(backToString);
 
     console.log('backToString: ', backToString);
       };

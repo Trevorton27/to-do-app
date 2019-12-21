@@ -14,8 +14,8 @@ form.addEventListener('submit', event => {
   
 });
 
-const renderTodos = document.getElementById('todoLi');
-renderTodos.addEventListener("load", pullTodosFromLocal, console.log('pullTodosFromLocal has fired'));
+
+window.addEventListener("load", pullTodosFromLocal );
 
 
 const list = document.getElementById('js-todo-list');
@@ -44,10 +44,26 @@ function addTodo(text) {
   </li>
 `)};
 
+let todos = localStorage.getItem('todoItem'); 
+
 function pullTodosFromLocal() {
- const gotIt = JSON.parse(localStorage.getItem('todoItem')); 
- console.log(gotIt);
-}
+
+ console.log('pullTodosFromLocal has fired');
+
+ const renderTodos = document.getElementById('todoLi');
+
+   
+   renderTodos.innerHTML = `<li class="todo-item" id="todoLi" data-key="${todos.id}">
+   <input id="${todos.id}" type="checkbox"/>
+   <label for="${todos.id}" class="tick js-tick"></label>
+   <span>${todos.text}</span>
+   <button class="delete-todo js-delete-todo">
+     <svg><use href="#delete-icon"></use></svg>
+   </button>
+ </li>`
+ console.log('todos: ', todos);
+ };
+
 
     
 
@@ -65,8 +81,8 @@ list.addEventListener('click', event => {
 });
 
 function toggleDone(key) {
-    const index = todoItems.findIndex(item => item.id === Number(key));
-    todoItems[index].checked = !todoItems[index].checked;
+  const index = todo.findIndex(item => item.id === Number(key));
+    todo[index].checked = !todo[index].checked;
   
     const item = document.querySelector(`[data-key='${key}']`);
     if (todoItems[index].checked) {
@@ -82,18 +98,19 @@ function toggleDone(key) {
     //alert('You sure about that, now?');
     item.remove();
     
-    const retrieve = localStorage.getItem('todoItem');
-    const stringToArray = retrieve.split('todoItem');
+    //const retrieve = localStorage.getItem('todoItem');
+    //const stringToArray = retrieve.split('todoItem');
     //const findIt = stringToArray.indexOf(item);
 
    // findIt = 'todoItem';
 
     localStorage.removeItem('todoItem');
 
-    let backToString = JSON.stringify(stringToArray);
+    
     //localStorage.removeItem(backToString);
+     localStorage.setItem('todoItem', stringToArray);
 
-    console.log('backToString: ', backToString);
+    console.log('backToString: ', stringToArray);
       };
 
     
